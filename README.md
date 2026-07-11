@@ -20,12 +20,12 @@
 <br/>
 
 <p align="center">
-  <img height="180" src="https://github-readme-stats.vercel.app/api?username=HelloMyNameNikoloz&show_icons=true&bg_color=101914&title_color=e8bc66&text_color=f4ead7&icon_color=d7a84f&border_color=30362f&border_radius=16&rank_icon=github" alt="GitHub stats"/>
+  <img height="180" src="https://raw.githubusercontent.com/HelloMyNameNikoloz/HelloMyNameNikoloz/output/stats.svg" alt="GitHub stats"/>
   <img height="180" src="https://streak-stats.demolab.com?user=HelloMyNameNikoloz&background=101914&border=30362f&stroke=30362f&ring=d7a84f&fire=e8bc66&currStreakNum=f4ead7&sideNums=f4ead7&currStreakLabel=d7a84f&sideLabels=aba799&dates=8d8c7f&border_radius=16" alt="GitHub streak"/>
 </p>
 
 <p align="center">
-  <img width="500" src="https://github-readme-stats.vercel.app/api/top-langs/?username=HelloMyNameNikoloz&layout=compact&langs_count=8&bg_color=101914&title_color=e8bc66&text_color=f4ead7&border_color=30362f&border_radius=16" alt="Most used languages"/>
+  <img width="500" src="https://raw.githubusercontent.com/HelloMyNameNikoloz/HelloMyNameNikoloz/output/langs.svg" alt="Most used languages"/>
 </p>
 
 <br/>
