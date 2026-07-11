@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="110" viewBox="0 0 1000 110" fill="none" role="img" aria-label="From the first idea to a running product.">
+  <defs>
+    <linearGradient id="hair" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="1000" y2="0">
+      <stop offset="0"    stop-color="#f4ead7" stop-opacity="0"/>
+      <stop offset="0.5"  stop-color="#f4ead7" stop-opacity="0.22"/>
+      <stop offset="1"    stop-color="#f4ead7" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="shineF" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="1000" y2="0">
+      <stop offset="0.30" stop-color="#d7a84f"/>
+      <stop offset="0.50" stop-color="#f3d896"/>
+      <stop offset="0.70" stop-color="#d7a84f"/>
+      <animateTransform attributeName="gradientTransform" type="translate" from="-1000 0" to="1000 0" dur="7s" repeatCount="indefinite"/>
+    </linearGradient>
+  </defs>
+  <style>
+    .serif { font-family: Georgia, 'Times New Roman', serif; }
+    .sans  { font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; }
+  </style>
+  <rect x="0" y="8" width="1000" height="1" fill="url(#hair)"/>
+  <text class="serif" x="500" y="62" text-anchor="middle" font-size="24" font-style="italic" fill="url(#shineF)">From the first idea to a running product.</text>
+  <text class="sans" x="500" y="94" text-anchor="middle" font-size="12" letter-spacing="2.5" fill="#f4ead7" opacity="0.45">HALLE (SAALE), GERMANY · NIKOLOZ.DE</text>
+</svg>

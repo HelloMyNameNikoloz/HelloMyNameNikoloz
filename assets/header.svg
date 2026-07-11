@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="330" viewBox="0 0 1000 330" fill="none" role="img" aria-label="Nikoloz Iashvili, Full-Stack Developer. Software that makes work simpler.">
+  <defs>
+    <radialGradient id="glowGold" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(880 30) scale(480)">
+      <stop offset="0" stop-color="#d7a84f" stop-opacity="0.14"/>
+      <stop offset="1" stop-color="#d7a84f" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glowGreen" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(120 330) scale(420)">
+      <stop offset="0" stop-color="#4a6b4a" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#4a6b4a" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="shine" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="1000" y2="0">
+      <stop offset="0.30" stop-color="#d7a84f"/>
+      <stop offset="0.50" stop-color="#f3d896"/>
+      <stop offset="0.70" stop-color="#d7a84f"/>
+      <animateTransform attributeName="gradientTransform" type="translate" from="-1000 0" to="1000 0" dur="7s" repeatCount="indefinite"/>
+    </linearGradient>
+    <clipPath id="frame"><rect width="1000" height="330" rx="20"/></clipPath>
+  </defs>
+
+  <style>
+    .sans { font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; }
+    .serif { font-family: Georgia, 'Times New Roman', serif; }
+    .up { opacity: 0; animation: rise 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    .d1 { animation-delay: 0.10s; }
+    .d2 { animation-delay: 0.28s; }
+    .d3 { animation-delay: 0.46s; }
+    .d4 { animation-delay: 0.64s; }
+    .d5 { animation-delay: 0.82s; }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .particle { animation: drift 9s ease-in-out infinite alternate; }
+    .p2 { animation-duration: 12s; animation-delay: -3s; }
+    .p3 { animation-duration: 10s; animation-delay: -6s; }
+    .p4 { animation-duration: 14s; animation-delay: -2s; }
+    .p5 { animation-duration: 11s; animation-delay: -8s; }
+    @keyframes drift {
+      from { transform: translate(0, 0); }
+      to   { transform: translate(10px, -22px); }
+    }
+    .pulse { animation: pulse 2.4s ease-in-out infinite; transform-origin: center; transform-box: fill-box; }
+    @keyframes pulse {
+      0%, 100% { opacity: 0.9; }
+      50%      { opacity: 0.35; }
+    }
+    .ring { animation: ring 2.4s ease-out infinite; transform-origin: center; transform-box: fill-box; }
+    @keyframes ring {
+      0%   { transform: scale(0.6); opacity: 0.6; }
+      100% { transform: scale(2.2); opacity: 0; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .up { animation: none; opacity: 1; }
+      .particle, .pulse, .ring { animation: none; }
+    }
+  </style>
+
+  <g clip-path="url(#frame)">
+    <rect width="1000" height="330" fill="#101914"/>
+    <rect width="1000" height="330" fill="url(#glowGold)"/>
+    <rect width="1000" height="330" fill="url(#glowGreen)"/>
+
+    <!-- ambient garden particles -->
+    <circle class="particle"    cx="712" cy="248" r="2.4" fill="#d7a84f" opacity="0.35"/>
+    <circle class="particle p2" cx="828" cy="182" r="1.7" fill="#f4ead7" opacity="0.25"/>
+    <circle class="particle p3" cx="905" cy="256" r="2.0" fill="#d7a84f" opacity="0.28"/>
+    <circle class="particle p4" cx="770" cy="110" r="1.5" fill="#8fae72" opacity="0.30"/>
+    <circle class="particle p5" cx="948" cy="140" r="1.8" fill="#f4ead7" opacity="0.20"/>
+    <circle class="particle p3" cx="655" cy="150" r="1.4" fill="#d7a84f" opacity="0.22"/>
+
+    <!-- wordmark, top left -->
+    <text class="sans up d1" x="64" y="66" font-size="20" font-weight="600" letter-spacing="1" fill="#f4ead7">[N!]</text>
+    <!-- site, top right -->
+    <text class="sans up d1" x="936" y="64" text-anchor="end" font-size="14" letter-spacing="2" fill="#f4ead7" opacity="0.55">nikoloz.de</text>
+
+    <!-- eyebrow -->
+    <text class="sans up d2" x="64" y="118" font-size="13" font-weight="500" letter-spacing="3.5" fill="#f4ead7" opacity="0.55">NIKOLOZ IASHVILI · FULL-STACK DEVELOPER</text>
+
+    <!-- headline -->
+    <text class="sans up d3" x="62" y="176" font-size="50" font-weight="300" fill="#f4ead7">Software that</text>
+    <text class="serif up d4" x="62" y="236" font-size="52" font-style="italic" fill="url(#shine)">makes work simpler.</text>
+
+    <!-- sub -->
+    <text class="sans up d5" x="64" y="276" font-size="16" fill="#f4ead7" opacity="0.68">Web applications, backends, and data tools. From the first idea to a running product.</text>
+
+    <!-- status row -->
+    <g class="up d5">
+      <circle class="ring" cx="70" cy="303" r="4" fill="none" stroke="#d7a84f" stroke-width="1.5"/>
+      <circle class="pulse" cx="70" cy="303" r="4" fill="#d7a84f"/>
+      <text class="sans" x="84" y="308" font-size="13.5" fill="#f4ead7" opacity="0.68">Available for full-time roles and projects</text>
+      <text class="sans" x="936" y="308" text-anchor="end" font-size="13.5" fill="#f4ead7" opacity="0.55">Halle (Saale), Germany</text>
+    </g>
+  </g>
+
+  <!-- hairline frame -->
+  <rect x="0.5" y="0.5" width="999" height="329" rx="19.5" stroke="#f4ead7" stroke-opacity="0.14"/>
+</svg>
