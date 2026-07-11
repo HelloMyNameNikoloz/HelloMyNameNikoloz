@@ -35,3 +35,6 @@
 </p>
 
 <img src="assets/footer.svg" width="100%" alt="From the first idea to a running product."/>
+
+<!-- Palette: nikoloz.de evening garden. Canvas #101914, cream #f4ead7, gold #d7a84f. -->
+
