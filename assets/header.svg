@@ -39,19 +39,9 @@
       from { transform: translate(0, 0); }
       to   { transform: translate(10px, -22px); }
     }
-    .pulse { animation: pulse 2.4s ease-in-out infinite; transform-origin: center; transform-box: fill-box; }
-    @keyframes pulse {
-      0%, 100% { opacity: 0.9; }
-      50%      { opacity: 0.35; }
-    }
-    .ring { animation: ring 2.4s ease-out infinite; transform-origin: center; transform-box: fill-box; }
-    @keyframes ring {
-      0%   { transform: scale(0.6); opacity: 0.6; }
-      100% { transform: scale(2.2); opacity: 0; }
-    }
     @media (prefers-reduced-motion: reduce) {
       .up { animation: none; opacity: 1; }
-      .particle, .pulse, .ring { animation: none; }
+      .particle { animation: none; }
     }
   </style>
 
@@ -83,11 +73,8 @@
     <!-- sub -->
     <text class="sans up d5" x="64" y="276" font-size="16" fill="#f4ead7" opacity="0.68">Web applications, backends, and data tools. From the first idea to a running product.</text>
 
-    <!-- status row -->
+    <!-- location row -->
     <g class="up d5">
-      <circle class="ring" cx="70" cy="303" r="4" fill="none" stroke="#d7a84f" stroke-width="1.5"/>
-      <circle class="pulse" cx="70" cy="303" r="4" fill="#d7a84f"/>
-      <text class="sans" x="84" y="308" font-size="13.5" fill="#f4ead7" opacity="0.68">Available for full-time roles and projects</text>
       <text class="sans" x="936" y="308" text-anchor="end" font-size="13.5" fill="#f4ead7" opacity="0.55">Halle (Saale), Germany</text>
     </g>
   </g>
