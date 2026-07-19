@@ -61,11 +61,23 @@ STYLE = """
     .d2 { animation-delay: 0.20s; }
     .d3 { animation-delay: 0.35s; }
     .d4 { animation-delay: 0.50s; }
+    .flame {
+      opacity: 0;
+      transform: scale(0.72);
+      transform-box: fill-box;
+      transform-origin: center bottom;
+      animation: ignite 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.45s forwards;
+    }
     @keyframes rise {
       from { opacity: 0; transform: translateY(10px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-    @media (prefers-reduced-motion: reduce) { .up { animation: none; opacity: 1; } }
+    @keyframes ignite {
+      to { opacity: 1; transform: scale(1); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .up, .flame { animation: none; opacity: 1; transform: none; }
+    }
 """
 
 
@@ -267,9 +279,11 @@ def streak_svg(summary: StreakSummary) -> str:
         f'  <text class="sans num up d2" x="82.5" y="80" text-anchor="middle" font-size="29" font-weight="600" fill="{INK}">{fmt(summary.total)}</text>',
         f'  <text class="sans up d3" x="82.5" y="116" text-anchor="middle" font-size="13" fill="{INK}" opacity="0.62">Total contributions</text>',
         f'  <text class="sans up d4" x="82.5" y="145" text-anchor="middle" font-size="10.5" fill="{INK}" opacity="0.42">{first_label}</text>',
-        f'  <circle class="up d2" cx="247.5" cy="73" r="40" fill="none" stroke="{BORDER}" stroke-width="5"/>',
-        f'  <circle class="up d2" cx="247.5" cy="73" r="40" fill="none" stroke="{ACCENT}" stroke-width="5" stroke-linecap="round"/>',
-        f'  <text class="sans num up d3" x="247.5" y="82" text-anchor="middle" font-size="29" font-weight="600" fill="{INK}">{fmt(summary.current)}</text>',
+        f'  <circle class="up d2" cx="247.5" cy="76" r="40" fill="{RAISED}" fill-opacity="0.42" stroke="{BORDER}" stroke-width="5"/>',
+        f'  <circle class="up d2" cx="247.5" cy="76" r="40" fill="none" stroke="{ACCENT}" stroke-width="5" stroke-linecap="round"/>',
+        f'  <path class="up d2" d="M247.5 36 A40 40 0 0 1 271 43.6" fill="none" stroke="{ACCENT_BRIGHT}" stroke-width="2" stroke-linecap="round" opacity="0.72"/>',
+        f'  <g class="flame" aria-hidden="true"><path d="M247.5 18 C251 27 259 31 259 40 C259 48 254 53 247.5 53 C240.5 53 235.5 48 235.5 41 C235.5 35 239 31 243.5 26 C243 32 244.5 35 247.5 35 C251 35 252 28 247.5 18 Z" fill="{CHARCOAL}" stroke="{ACCENT_BRIGHT}" stroke-width="3" stroke-linejoin="round"/><path d="M248 35 C252 40 251.5 46 247.5 49 C244 47 243.5 42 248 35 Z" fill="{ACCENT}"/></g>',
+        f'  <text class="sans num up d3" x="247.5" y="87" text-anchor="middle" font-size="29" font-weight="600" fill="{INK}">{fmt(summary.current)}</text>',
         f'  <text class="sans up d3" x="247.5" y="132" text-anchor="middle" font-size="13" font-weight="600" fill="{ACCENT}">Current streak</text>',
         f'  <text class="sans up d4" x="247.5" y="158" text-anchor="middle" font-size="10.5" fill="{INK}" opacity="0.42">{current_label}</text>',
         f'  <text class="sans num up d2" x="412.5" y="80" text-anchor="middle" font-size="29" font-weight="600" fill="{INK}">{fmt(summary.longest)}</text>',
