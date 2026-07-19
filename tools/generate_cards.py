@@ -1,9 +1,11 @@
-"""Generate stats.svg and langs.svg for the profile README, in the
+"""Generate profile cards for the README, in the
 nikoloz.de evening-garden palette. Runs in CI with GITHUB_TOKEN."""
 
 import json
 import os
 import urllib.request
+from dataclasses import dataclass
+from datetime import UTC, date, datetime, timedelta
 
 CHARCOAL = "#101914"
 RAISED = "#1d2a20"
@@ -12,10 +14,12 @@ ACCENT = "#d7a84f"
 ACCENT_BRIGHT = "#e8bc66"
 BORDER = "#30362f"
 LANG_RAMP = ["#e8bc66", "#d7a84f", "#9aa84f", "#8fae72", "#5c7a3f", "#33532f"]
+MONTHS = ("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
 
 QUERY = """
 query($login: String!) {
   user(login: $login) {
+    createdAt
     followers { totalCount }
     repositories(first: 100, ownerAffiliations: OWNER, isFork: false) {
       totalCount
@@ -30,6 +34,20 @@ query($login: String!) {
       totalCommitContributions
       totalPullRequestContributions
       contributionCalendar { totalContributions }
+    }
+  }
+}
+"""
+
+CALENDAR_QUERY = """
+query($login: String!, $from: DateTime!, $to: DateTime!) {
+  user(login: $login) {
+    contributionsCollection(from: $from, to: $to) {
+      contributionCalendar {
+        weeks {
+          contributionDays { date contributionCount }
+        }
+      }
     }
   }
 }
@@ -51,8 +69,20 @@ STYLE = """
 """
 
 
-def fetch(login: str, token: str) -> dict:
-    body = json.dumps({"query": QUERY, "variables": {"login": login}}).encode()
+@dataclass(frozen=True)
+class StreakSummary:
+    total: int
+    first_date: date
+    current: int
+    current_start: date | None
+    current_end: date | None
+    longest: int
+    longest_start: date | None
+    longest_end: date | None
+
+
+def graphql(query: str, variables: dict, token: str) -> dict:
+    body = json.dumps({"query": query, "variables": variables}).encode()
     req = urllib.request.Request(
         "https://api.github.com/graphql",
         data=body,
@@ -62,7 +92,96 @@ def fetch(login: str, token: str) -> dict:
         data = json.load(resp)
     if data.get("errors"):
         raise RuntimeError(data["errors"])
-    return data["data"]["user"]
+    return data["data"]
+
+
+def fetch(login: str, token: str) -> dict:
+    return graphql(QUERY, {"login": login}, token)["user"]
+
+
+def fetch_contribution_days(
+    login: str,
+    token: str,
+    created_at: str,
+    through: date | None = None,
+) -> dict[date, int]:
+    first_date = date.fromisoformat(created_at[:10])
+    last_date = through or datetime.now(UTC).date()
+    contributions: dict[date, int] = {}
+    period_start = first_date
+
+    # GitHub limits each contributionsCollection request to a one-year window.
+    while period_start <= last_date:
+        period_end = min(period_start + timedelta(days=364), last_date)
+        variables = {
+            "login": login,
+            "from": f"{period_start.isoformat()}T00:00:00Z",
+            "to": f"{period_end.isoformat()}T23:59:59Z",
+        }
+        calendar = graphql(CALENDAR_QUERY, variables, token)["user"][
+            "contributionsCollection"
+        ]["contributionCalendar"]
+        for week in calendar["weeks"]:
+            for contribution_day in week["contributionDays"]:
+                day = date.fromisoformat(contribution_day["date"])
+                if period_start <= day <= period_end:
+                    contributions[day] = contribution_day["contributionCount"]
+        period_start = period_end + timedelta(days=1)
+
+    day = first_date
+    while day <= last_date:
+        contributions.setdefault(day, 0)
+        day += timedelta(days=1)
+    return contributions
+
+
+def calculate_streaks(contributions: dict[date, int], today: date) -> StreakSummary:
+    first_date = min(contributions, default=today)
+    total = sum(contributions.values())
+    longest = 0
+    longest_start: date | None = None
+    longest_end: date | None = None
+    run = 0
+    run_start: date | None = None
+
+    day = first_date
+    while day <= today:
+        if contributions.get(day, 0) > 0:
+            if run == 0:
+                run_start = day
+            run += 1
+            if run > longest:
+                longest = run
+                longest_start = run_start
+                longest_end = day
+        else:
+            run = 0
+            run_start = None
+        day += timedelta(days=1)
+
+    current_end = today
+    if contributions.get(current_end, 0) == 0:
+        current_end -= timedelta(days=1)
+    current_start = current_end
+    while current_start >= first_date and contributions.get(current_start, 0) > 0:
+        current_start -= timedelta(days=1)
+    current_start += timedelta(days=1)
+    current = (current_end - current_start).days + 1
+    if contributions.get(current_end, 0) == 0:
+        current = 0
+        current_start = None
+        current_end = None
+
+    return StreakSummary(
+        total=total,
+        first_date=first_date,
+        current=current,
+        current_start=current_start,
+        current_end=current_end,
+        longest=longest,
+        longest_start=longest_start,
+        longest_end=longest_end,
+    )
 
 
 def fmt(n: int) -> str:
@@ -124,6 +243,46 @@ def stats_svg(user: dict) -> str:
     return card("\n".join(parts), label="GitHub statistics for Nikoloz")
 
 
+def short_date(day: date) -> str:
+    return f"{MONTHS[day.month - 1]} {day.day}"
+
+
+def date_range(start: date | None, end: date | None, present: bool = False) -> str:
+    if start is None or end is None:
+        return "No streak yet"
+    if present:
+        return f"{short_date(start)} - Present"
+    if start == end:
+        return short_date(start)
+    return f"{short_date(start)} - {short_date(end)}"
+
+
+def streak_svg(summary: StreakSummary) -> str:
+    first_label = f"{short_date(summary.first_date)}, {summary.first_date.year} - Present"
+    current_label = date_range(summary.current_start, summary.current_end, present=summary.current > 0)
+    longest_label = date_range(summary.longest_start, summary.longest_end)
+    parts = [
+        f'  <line class="up d1" x1="165" y1="26" x2="165" y2="169" stroke="{BORDER}"/>',
+        f'  <line class="up d1" x1="330" y1="26" x2="330" y2="169" stroke="{BORDER}"/>',
+        f'  <text class="sans num up d2" x="82.5" y="80" text-anchor="middle" font-size="29" font-weight="600" fill="{INK}">{fmt(summary.total)}</text>',
+        f'  <text class="sans up d3" x="82.5" y="116" text-anchor="middle" font-size="13" fill="{INK}" opacity="0.62">Total contributions</text>',
+        f'  <text class="sans up d4" x="82.5" y="145" text-anchor="middle" font-size="10.5" fill="{INK}" opacity="0.42">{first_label}</text>',
+        f'  <circle class="up d2" cx="247.5" cy="73" r="40" fill="none" stroke="{BORDER}" stroke-width="5"/>',
+        f'  <circle class="up d2" cx="247.5" cy="73" r="40" fill="none" stroke="{ACCENT}" stroke-width="5" stroke-linecap="round"/>',
+        f'  <text class="sans num up d3" x="247.5" y="82" text-anchor="middle" font-size="29" font-weight="600" fill="{INK}">{fmt(summary.current)}</text>',
+        f'  <text class="sans up d3" x="247.5" y="132" text-anchor="middle" font-size="13" font-weight="600" fill="{ACCENT}">Current streak</text>',
+        f'  <text class="sans up d4" x="247.5" y="158" text-anchor="middle" font-size="10.5" fill="{INK}" opacity="0.42">{current_label}</text>',
+        f'  <text class="sans num up d2" x="412.5" y="80" text-anchor="middle" font-size="29" font-weight="600" fill="{INK}">{fmt(summary.longest)}</text>',
+        f'  <text class="sans up d3" x="412.5" y="116" text-anchor="middle" font-size="13" fill="{INK}" opacity="0.62">Longest streak</text>',
+        f'  <text class="sans up d4" x="412.5" y="145" text-anchor="middle" font-size="10.5" fill="{INK}" opacity="0.42">{longest_label}</text>',
+    ]
+    label = (
+        f"GitHub contribution streak for Nikoloz: {summary.current} days current, "
+        f"{summary.longest} days longest"
+    )
+    return card("\n".join(parts), label=label)
+
+
 def langs_svg(user: dict) -> str:
     sizes: dict[str, int] = {}
     for repo in user["repositories"]["nodes"]:
@@ -169,13 +328,18 @@ def main() -> None:
     login = os.environ["GITHUB_REPOSITORY_OWNER"]
     token = os.environ["GITHUB_TOKEN"]
     user = fetch(login, token)
+    today = datetime.now(UTC).date()
+    contribution_days = fetch_contribution_days(login, token, user["createdAt"], today)
+    streak = calculate_streaks(contribution_days, today)
 
     os.makedirs("dist", exist_ok=True)
     with open("dist/stats.svg", "w", encoding="utf-8") as f:
         f.write(stats_svg(user))
     with open("dist/langs.svg", "w", encoding="utf-8") as f:
         f.write(langs_svg(user))
-    print("wrote dist/stats.svg and dist/langs.svg")
+    with open("dist/streak.svg", "w", encoding="utf-8") as f:
+        f.write(streak_svg(streak))
+    print("wrote dist/stats.svg, dist/langs.svg, and dist/streak.svg")
 
 
 if __name__ == "__main__":

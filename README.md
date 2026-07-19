@@ -21,7 +21,7 @@ Hi, I am Nikoloz. I build web applications, backends, and data tools, from the f
 
 <p align="center">
   <img height="180" src="https://raw.githubusercontent.com/HelloMyNameNikoloz/HelloMyNameNikoloz/output/stats.svg" alt="GitHub stats"/>
-  <img height="180" src="https://streak-stats.demolab.com?user=HelloMyNameNikoloz&background=101914&border=30362f&stroke=30362f&ring=d7a84f&fire=e8bc66&currStreakNum=f4ead7&sideNums=f4ead7&currStreakLabel=d7a84f&sideLabels=aba799&dates=8d8c7f&border_radius=16" alt="GitHub streak"/>
+  <img height="180" src="https://raw.githubusercontent.com/HelloMyNameNikoloz/HelloMyNameNikoloz/output/streak.svg" alt="GitHub contribution streak"/>
 </p>
 
 <p align="center">
