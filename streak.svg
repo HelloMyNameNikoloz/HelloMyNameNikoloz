@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="495" height="195" viewBox="0 0 495 195" fill="none" role="img" aria-label="GitHub contribution streak for Nikoloz: 16 days current, 16 days longest">
+  <style>
+    .sans { font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; }
+    .num { font-variant-numeric: tabular-nums; }
+    .up { opacity: 0; animation: rise 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    .d1 { animation-delay: 0.05s; }
+    .d2 { animation-delay: 0.20s; }
+    .d3 { animation-delay: 0.35s; }
+    .d4 { animation-delay: 0.50s; }
+    .flame {
+      opacity: 0;
+      transform: scale(0.72);
+      transform-box: fill-box;
+      transform-origin: center bottom;
+      animation: ignite 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.45s forwards;
+    }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes ignite {
+      to { opacity: 1; transform: scale(1); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .up, .flame { animation: none; opacity: 1; transform: none; }
+    }
+</style>
+  <rect x="0.5" y="0.5" width="494" height="194" rx="15.5" fill="#101914" stroke="#30362f"/>
+  <line class="up d1" x1="165" y1="26" x2="165" y2="169" stroke="#30362f"/>
+  <line class="up d1" x1="330" y1="26" x2="330" y2="169" stroke="#30362f"/>
+  <text class="sans num up d2" x="82.5" y="80" text-anchor="middle" font-size="29" font-weight="600" fill="#f4ead7">724</text>
+  <text class="sans up d3" x="82.5" y="116" text-anchor="middle" font-size="13" fill="#f4ead7" opacity="0.62">Total contributions</text>
+  <text class="sans up d4" x="82.5" y="145" text-anchor="middle" font-size="10.5" fill="#f4ead7" opacity="0.42">Nov 10, 2022 - Present</text>
+  <circle class="up d2" cx="247.5" cy="76" r="40" fill="#1d2a20" fill-opacity="0.42" stroke="#30362f" stroke-width="5"/>
+  <circle class="up d2" cx="247.5" cy="76" r="40" fill="none" stroke="#d7a84f" stroke-width="5" stroke-linecap="round"/>
+  <path class="up d2" d="M247.5 36 A40 40 0 0 1 271 43.6" fill="none" stroke="#e8bc66" stroke-width="2" stroke-linecap="round" opacity="0.72"/>
+  <g class="flame" aria-hidden="true"><path d="M247.5 18 C251 27 259 31 259 40 C259 48 254 53 247.5 53 C240.5 53 235.5 48 235.5 41 C235.5 35 239 31 243.5 26 C243 32 244.5 35 247.5 35 C251 35 252 28 247.5 18 Z" fill="#101914" stroke="#e8bc66" stroke-width="3" stroke-linejoin="round"/><path d="M248 35 C252 40 251.5 46 247.5 49 C244 47 243.5 42 248 35 Z" fill="#d7a84f"/></g>
+  <text class="sans num up d3" x="247.5" y="87" text-anchor="middle" font-size="29" font-weight="600" fill="#f4ead7">16</text>
+  <text class="sans up d3" x="247.5" y="132" text-anchor="middle" font-size="13" font-weight="600" fill="#d7a84f">Current streak</text>
+  <text class="sans up d4" x="247.5" y="158" text-anchor="middle" font-size="10.5" fill="#f4ead7" opacity="0.42">Jul 9 - Present</text>
+  <text class="sans num up d2" x="412.5" y="80" text-anchor="middle" font-size="29" font-weight="600" fill="#f4ead7">16</text>
+  <text class="sans up d3" x="412.5" y="116" text-anchor="middle" font-size="13" fill="#f4ead7" opacity="0.62">Longest streak</text>
+  <text class="sans up d4" x="412.5" y="145" text-anchor="middle" font-size="10.5" fill="#f4ead7" opacity="0.42">Jul 9 - Jul 24</text>
+</svg>

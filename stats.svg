@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="495" height="195" viewBox="0 0 495 195" fill="none" role="img" aria-label="GitHub statistics for Nikoloz">
+  <style>
+    .sans { font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; }
+    .num { font-variant-numeric: tabular-nums; }
+    .up { opacity: 0; animation: rise 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    .d1 { animation-delay: 0.05s; }
+    .d2 { animation-delay: 0.20s; }
+    .d3 { animation-delay: 0.35s; }
+    .d4 { animation-delay: 0.50s; }
+    .flame {
+      opacity: 0;
+      transform: scale(0.72);
+      transform-box: fill-box;
+      transform-origin: center bottom;
+      animation: ignite 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.45s forwards;
+    }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes ignite {
+      to { opacity: 1; transform: scale(1); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .up, .flame { animation: none; opacity: 1; transform: none; }
+    }
+</style>
+  <rect x="0.5" y="0.5" width="494" height="194" rx="15.5" fill="#101914" stroke="#30362f"/>
+  <text class="sans up d1" x="24" y="40" font-size="15" font-weight="600" letter-spacing="0.5" fill="#e8bc66">GitHub, at a glance</text>
+  <text class="sans num up d2" x="471" y="58" text-anchor="end" font-size="52" font-weight="300" fill="none" stroke="#f4ead7" stroke-opacity="0.22">505</text>
+  <text class="sans up d2" x="471" y="76" text-anchor="end" font-size="10.5" letter-spacing="1.5" fill="#f4ead7" opacity="0.5">CONTRIBUTIONS IN THE LAST YEAR</text>
+  <text class="sans up d3" x="24" y="116" font-size="13" fill="#f4ead7" opacity="0.68">Commits, last year</text>
+  <text class="sans num up d3" x="214" y="116" text-anchor="end" font-size="13.5" font-weight="600" fill="#d7a84f">76</text>
+  <text class="sans up d3" x="24" y="143" font-size="13" fill="#f4ead7" opacity="0.68">Repositories</text>
+  <text class="sans num up d3" x="214" y="143" text-anchor="end" font-size="13.5" font-weight="600" fill="#d7a84f">7</text>
+  <text class="sans up d3" x="24" y="170" font-size="13" fill="#f4ead7" opacity="0.68">Languages used</text>
+  <text class="sans num up d3" x="214" y="170" text-anchor="end" font-size="13.5" font-weight="600" fill="#d7a84f">14</text>
+  <text class="sans up d4" x="264" y="116" font-size="13" fill="#f4ead7" opacity="0.68">Followers</text>
+  <text class="sans num up d4" x="471" y="116" text-anchor="end" font-size="13.5" font-weight="600" fill="#d7a84f">1</text>
+</svg>
